@@ -5,6 +5,7 @@
 - Add list books function 
 
 # Completed
+- Fix string issue on Create Book function
 - Add create book function
 - Add Books model
 - Add authors model

@@ -34,7 +34,7 @@ router.post('/', auth, async (req, res) => {
 
         const authors = []
         for(let author of result.value.authors){
-            let authorModel = await Author.findOne({name: { $regex : new RegExp(author, "i") }})
+            let authorModel = await Author.findOne({name: { $regex : new RegExp(author.replace(/\s+/g,' ').trim(), "i") }})
             if(!authorModel){
                 authorModel = new Author({name: author})
                 await authorModel.save()
@@ -44,7 +44,7 @@ router.post('/', auth, async (req, res) => {
 
         const genres = []
         for(let genre of result.value.genres){
-            let genreModel = await Genre.findOne({name: { $regex : new RegExp(genre, "i") }})
+            let genreModel = await Genre.findOne({name: { $regex : new RegExp(genre.replace(/\s+/g,' ').trim(), "i") }})
             if(!genreModel){
                 genreModel = new Genre({name: genre})
                 await genreModel.save()
