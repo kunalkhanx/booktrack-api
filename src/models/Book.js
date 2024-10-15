@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
         required: false,
         default: null
     },
-    Genres: {
+    genres: {
         type: Array,
         required: true
     },

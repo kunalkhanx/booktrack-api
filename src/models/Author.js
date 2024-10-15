@@ -1,3 +1,4 @@
+const Case = require('case')
 const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
@@ -9,6 +10,12 @@ const schema = new mongoose.Schema({
         maxLength: 160
     }
 }, {timestamps: true})
+
+schema.pre('save', async function(next){
+    const author = this
+    author.name = Case.title(author.name.toLowerCase())
+    return next()
+})
 
 const Author = mongoose.model('Author', schema)
 module.exports = Author
