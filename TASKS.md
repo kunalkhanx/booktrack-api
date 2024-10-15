@@ -1,10 +1,10 @@
 # Pending
-- Add update book function
 - Add delete book function
 - Add get book function
 - Add list books function 
 
 # Completed
+- Add update book function
 - Fix string issue on Create Book function
 - Add create book function
 - Add Books model

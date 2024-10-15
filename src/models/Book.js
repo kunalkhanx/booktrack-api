@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Author = require('./Author')
+const Genre = require('./Genre')
 
 const schema = new mongoose.Schema({
     title: {
@@ -43,6 +45,18 @@ const schema = new mongoose.Schema({
         default: []
     }
 }, {timestamps: true})
+
+schema.methods.getAuthors = async function() {
+    const book = this
+    const authors = await Author.find({_id: {$in: book.authors}})
+    return authors
+}
+
+schema.methods.getGenres = async function() {
+    const book = this
+    const genres = await Genre.find({_id: {$in: book.genres}})
+    return genres
+}
 
 const Book = mongoose.model('Book', schema)
 module.exports = Book
