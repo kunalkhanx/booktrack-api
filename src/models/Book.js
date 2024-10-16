@@ -10,10 +10,11 @@ const schema = new mongoose.Schema({
         maxLength: 255,
         unique: true
     },
-    authors: {
-        type: Array,
+    authors: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Author',
         required: true
-    },
+    }],
     description: {
         type: String,
         required: false,
@@ -25,10 +26,11 @@ const schema = new mongoose.Schema({
         required: false,
         default: null
     },
-    genres: {
-        type: Array,
+    genres: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Genre',
         required: true
-    },
+    }],
     pages: {
         type: Number,
         required: false,

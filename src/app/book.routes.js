@@ -7,6 +7,55 @@ const Genre = require('../models/Genre')
 const Book = require('../models/Book')
 const router = express.Router()
 
+
+router.get('/', auth, async (req, res) => {
+    try{
+
+        const query = {status: {$gt: 0}}
+
+        if(req.query.status !== undefined){
+            query.status = req.query.status
+        }
+
+        if(req.query.author){
+            query.authors = req.query.author
+        }
+
+        if(req.query.genres){
+            query.genres = {$in: req.query.genres}
+        }
+
+        if(req.query.search){
+            query.title = {$regex: new RegExp(req.query.search, 'i')}
+        }
+        
+        const limit = req.query.limit ? req.query.limit : 500;
+        const skip = req.query.skip ? req.query.skip : 0;
+        
+        if(limit > 500){
+            return res.status(400).json({
+                code: 400,
+                message: 'Query limit can\'t be more then 500'
+            })
+        }
+
+        const books = await Book.find(query).skip(skip).limit(limit)
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!',
+            data: books
+        })
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 router.get('/:book', auth, async (req, res) => {
     try{
         const book = await Book.findById(req.params.book)
