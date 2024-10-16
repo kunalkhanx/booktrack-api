@@ -47,6 +47,33 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+router.get('/:author', auth, async (req, res) => {
+    try{
+        const author = await Author.findById(req.params.author)
+        if(!author){
+            return res.status(404).json({
+                code: 404,
+                message: 'Author not found'
+            })
+        }
+        
+        const books = await author.getBooks()
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!',
+            data: {...author.toJSON(), books}
+        })
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 router.post('/', auth, async (req, res) => {
     try{
 
