@@ -8,6 +8,10 @@ const schema = new mongoose.Schema({
         trim: true,
         unique: true,
         maxLength: 160
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, {timestamps: true})
 

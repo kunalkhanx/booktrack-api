@@ -2,9 +2,9 @@
 - Add import books function
 - Add delete author function
 - Add get author function
-- Add list authors functions
 
 # Completed
+- Add list authors functions
 - Add update author function
 - Add create author function
 - Add get book function
