@@ -43,6 +43,10 @@ const schema = new mongoose.Schema({
         type: Array,
         required: false,
         default: []
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, {timestamps: true})
 

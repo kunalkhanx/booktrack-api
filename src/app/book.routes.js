@@ -129,7 +129,6 @@ router.patch('/:book', auth, async (req, res) => {
             }
         }
 
-        // const book = new Book({...result.value, authors: authors.map(item => item._id), genres: genres.map(item => item._id)})
         for(let i in result.value){
             if(i === 'authors'){
                 console.log(result.value.authors)
@@ -153,6 +152,38 @@ router.patch('/:book', auth, async (req, res) => {
             data: {...book.toJSON(), authors: bookAuthors, genres: bookGenres}
         })
 
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
+router.delete('/:book', auth, async (req, res) => {
+    try{
+        const book = await Book.findById(req.params.book)
+        if(!book){
+            return res.status(404).json({
+                code: 404,
+                message: 'Book not found'
+            })
+        }
+        if(book.status > -1){
+            book.status = -1
+            await book.save()
+            return res.status(200).json({
+                code: 200,
+                message: 'Book moved to trash'
+            })
+        }
+        await Book.deleteOne({_id: book._id})
+        return res.status(200).json({
+            code: 200,
+            message: 'Book deleted successfully'
+        })       
+        
     }catch(e){
         debug.error(e)
         return res.status(500).json({
