@@ -1,9 +1,11 @@
 # Pending
 - Add import books function
-- Add update author function
 - Add delete author function
+- Add get author function
+- Add list authors functions
 
 # Completed
+- Add update author function
 - Add create author function
 - Add get book function
 - Add list books function
