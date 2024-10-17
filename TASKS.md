@@ -1,11 +1,11 @@
 # Pending
 - Add import books function
 - Add update genre function
-- Add list genres function
 - Add get genres function
 - Add delete genres function
 
 # Completed
+- Add list genres function
 - Add create genre function
 - Add delete author function
 - Add get author function
