@@ -7,6 +7,10 @@ const schema = new mongoose.Schema({
         required: true,
         maxLength: 50,
         unique: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, {timestamps: true})
 
