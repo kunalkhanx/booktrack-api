@@ -1,9 +1,16 @@
 # Pending
 - Add import books function
-- Add delete genres function
 - Filter selection on relationship functions
+- Add Shelf model
+- Add create shelf function
+- Add update shelf function
+- Add get shelf function
+- Add list shelf function
+- Add delete shelf function
+- Add some defualt shelf while register user
 
 # Completed
+- Add delete genres function
 - Add get genres function
 - Add update genre function
 - Add list genres function
@@ -24,3 +31,4 @@
 - Add Genre model
 - Setup git & github
 - Create project with boilerplate
+- Add delete genres function

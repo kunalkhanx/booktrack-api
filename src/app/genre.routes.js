@@ -151,4 +151,28 @@ router.patch('/:genre', auth, async (req, res) => {
     }
 })
 
+router.delete('/:genre', auth, async (req, res) => {
+    try{
+        const genre = await Genre.findById(req.params.genre)
+        if(!genre){
+            return res.status(404).json({
+                code: 404,
+                message: 'Genre not found'
+            })
+        }
+        genre.status = -1;
+        await genre.save()
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!'
+        })
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 module.exports = router
