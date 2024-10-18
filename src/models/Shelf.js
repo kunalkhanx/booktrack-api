@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
     },
     allow_delete: {
         type: Boolean,
-        default: false
+        default: true
     },
     status: {
         type: Number,

@@ -1,14 +1,16 @@
 # Pending
 - Add import books function
 - Filter selection on relationship functions
-- Add create shelf function
 - Add update shelf function
 - Add get shelf function
 - Add list shelf function
 - Add delete shelf function
 - Add some defualt shelf while register user
+- Verify and validation rules on models
+- Add unique checks for better UX
 
 # Completed
+- Add create shelf function
 - Add Shelf model
 - Add delete genres function
 - Add get genres function
