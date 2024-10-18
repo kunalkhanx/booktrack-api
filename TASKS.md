@@ -1,9 +1,10 @@
 # Pending
 - Add import books function
-- Add get genres function
 - Add delete genres function
+- Filter selection on relationship functions
 
 # Completed
+- Add get genres function
 - Add update genre function
 - Add list genres function
 - Add create genre function

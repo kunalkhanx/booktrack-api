@@ -20,5 +20,12 @@ schema.pre('save', async function(next){
     return next()
 })
 
-const Genre = new mongoose.model('Genre', schema)
+schema.methods.getBooks = async function(){
+    const genre = this;
+    const Book = require('./Book')
+    const books = await Book.find({genres: genre._id, status: 1})
+    return books
+}
+
+const Genre = mongoose.model('Genre', schema)
 module.exports = Genre
