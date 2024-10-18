@@ -1,7 +1,6 @@
 # Pending
 - Add import books function
 - Filter selection on relationship functions
-- Add Shelf model
 - Add create shelf function
 - Add update shelf function
 - Add get shelf function
@@ -10,6 +9,7 @@
 - Add some defualt shelf while register user
 
 # Completed
+- Add Shelf model
 - Add delete genres function
 - Add get genres function
 - Add update genre function
