@@ -6,6 +6,37 @@ const Shelf = require('../models/Shelf')
 
 const router = express.Router()
 
+
+router.get('/', auth, async (req, res) => {
+    try{
+
+        const query = {status: {$gt: 0}, user: req.user._id}
+
+        if(req.query.status !== undefined){
+            query.status = req.query.status
+        }
+
+        if(req.query.search){
+            query.title = {$regex: new RegExp(req.query.search, 'i')}
+        }
+
+        const shelfs = await Shelf.find(query)
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!',
+            data: shelfs
+        })
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 router.post('/', auth, async (req, res) => {
 
     try{
