@@ -15,11 +15,16 @@ const schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    books: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book',
+        required: true
+    }],
     status: {
         type: Number,
         default: 1
     }
-})
+}, {timestamps: true})
 
 const Shelf = mongoose.model('Shelf', schema)
 module.exports = Shelf

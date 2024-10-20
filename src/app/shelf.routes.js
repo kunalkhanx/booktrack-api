@@ -73,6 +73,50 @@ router.post('/', auth, async (req, res) => {
 
 })
 
+router.post('/:shelf/book', auth, async (req, res) => {
+    try{
+
+        const schema = Joi.object({
+            books: Joi.array().required().items(Joi.string()).min(1),
+        })
+        const result = schema.validate(req.body)
+        if(result.error){
+            const message = result.error.details[0].message
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: message
+            })
+        }
+
+        const shelf = await Shelf.findById(req.params.shelf)
+        if(!shelf){
+            return res.status(404).json({
+                code: 404,
+                message: 'Shelf not found'
+            })
+        }
+
+        const books = [...new Set([...shelf.books.map(book => book.toString()), ...result.value.books])]
+        shelf.books = books
+        await shelf.save()
+
+        return res.status(201).json({
+            code: 201,
+            message: 'Request Complete!',
+            data: shelf
+        })
+
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 
 router.patch('/:shelf', auth, async (req, res) => {
 

@@ -3,13 +3,13 @@
 - Filter selection on relationship functions
 - Add get shelf function
 - Add delete shelf function
-- Add insert books to shelf function
 - Add remove books from shelf function
 - Add some defualt shelf while register user
 - Verify and validation rules on models
 - Add unique checks for better UX
 
 # Completed
+- Add insert books to shelf function
 - Add list shelf function
 - Add update shelf function
 - Add create shelf function
