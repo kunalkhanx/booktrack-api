@@ -11,9 +11,9 @@ const schema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    allow_delete: {
+    protected: {
         type: Boolean,
-        default: true
+        default: false
     },
     status: {
         type: Number,
