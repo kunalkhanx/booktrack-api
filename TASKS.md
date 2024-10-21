@@ -1,7 +1,6 @@
 # Pending
 - Add import books function
 - Filter selection on relationship functions
-- Add get shelf function
 - Add delete shelf function
 - Add remove books from shelf function
 - Add some defualt shelf while register user
@@ -9,6 +8,7 @@
 - Add unique checks for better UX
 
 # Completed
+- Add get shelf function
 - Add insert books to shelf function
 - Add list shelf function
 - Add update shelf function

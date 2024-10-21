@@ -37,6 +37,32 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+router.get('/:shelf', auth, async (req, res) => {
+    try{
+
+        const shelf = await Shelf.findById(req.params.shelf)
+        if(!shelf){
+            return res.status(404).json({
+                code: 404,
+                message: 'Shelf not found'
+            })
+        }
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!',
+            data: shelf
+        })
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 router.post('/', auth, async (req, res) => {
 
     try{
