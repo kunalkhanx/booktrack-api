@@ -1,11 +1,12 @@
 # Pending
 - Add import books function
 - Filter selection on relationship functions
-- Add some defualt shelf while register user
 - Verify and validation rules on models
 - Add unique checks for better UX
+- Add shelf filter on list books
 
 # Completed
+- Add some defualt shelf while register user
 - Add remove books from shelf function
 - Add delete shelf function
 - Add get shelf function

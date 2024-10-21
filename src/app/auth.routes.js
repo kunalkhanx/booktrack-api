@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const Token = require('../models/Token');
 const debug = require('../utils/debug');
+const Shelf = require('../models/Shelf');
 
 const router = express.Router()
 
@@ -36,6 +37,15 @@ router.post('/register', async (req, res) => {
 
         const user = new User({...result.value, status: 1})
         await user.save()
+
+        let shelf = new Shelf({name: 'Want to Read', user: user._id, protected: true})
+        await shelf.save()
+
+        shelf = new Shelf({name: 'Currently Reading', user: user._id, protected: true})
+        await shelf.save()
+
+        shelf = new Shelf({name: 'Read', user: user._id, protected: true})
+        await shelf.save()
 
         return res.status(201).json({
             code: 201,
