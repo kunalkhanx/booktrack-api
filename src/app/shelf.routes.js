@@ -193,4 +193,31 @@ router.patch('/:shelf', auth, async (req, res) => {
 
 })
 
+router.delete('/:shelf', auth, async (req, res) => {
+    try{
+
+        const shelf = await Shelf.find({_id: req.params.shelf, user: req.user._id, protected: false})
+        if(!shelf){
+            return res.status(404).json({
+                code: 404,
+                message: 'Shelf not found'
+            })
+        }
+
+        await Shelf.deleteOne({_id: req.params.shelf})
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!'
+        })
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 module.exports = router
