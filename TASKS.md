@@ -1,11 +1,14 @@
 # Pending
-- Add import books function
-- Filter selection on relationship functions
 - Verify and validation rules on models
-- Add unique checks for better UX
-- Add shelf filter on list books
+- Add shelf books fetching function
+- Create Note model
+- Add create note function
+- Add update note function
+- Add list notes function
+- Add get note function
 
 # Completed
+- Add unique checks for better UX
 - Add some defualt shelf while register user
 - Add remove books from shelf function
 - Add delete shelf function

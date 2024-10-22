@@ -90,6 +90,15 @@ router.post('/', auth, async (req, res) => {
             })
         }
 
+        const existing = await Genre.findOne({name: { $regex : new RegExp(result.value.name.replace(/\s+/g,' ').trim(), "i") }})
+        if(existing){
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: 'Genre name is already exists!'
+            })
+        }
+
         const genre = new Genre(result.value)
         await genre.save()
 

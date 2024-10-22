@@ -107,6 +107,15 @@ router.post('/', auth, async (req, res) => {
             })
         }
 
+        const existing = await Book.findOne({title: { $regex : new RegExp(result.value.title.replace(/\s+/g,' ').trim(), "i") }})
+        if(existing){
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: 'Book title is already exists!'
+            })
+        }
+
         const authors = []
         for(let author of result.value.authors){
             let authorModel = await Author.findOne({name: { $regex : new RegExp(author.replace(/\s+/g,' ').trim(), "i") }})

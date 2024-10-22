@@ -35,6 +35,27 @@ router.post('/register', async (req, res) => {
             })
         }
 
+        result.value.username = result.value.username.toLowerCase()
+        result.value.email = result.value.email.toLowerCase()
+
+        const existing = await User.find({$or: [{username: result.value.username}, {email: result.value.email}]})
+        for(let u of existing){
+            if(u.username === result.value.username){
+                return res.status(400).json({
+                    code: 400,
+                    message: 'Invalid input(s)',
+                    data: 'Username is already used!'
+                })
+            }
+            if(u.email === result.value.email){
+                return res.status(400).json({
+                    code: 400,
+                    message: 'Invalid input(s)',
+                    data: 'Email id is already registerd!'
+                })
+            }
+        }
+
         const user = new User({...result.value, status: 1})
         await user.save()
 
@@ -81,7 +102,7 @@ router.post('/login', async (req, res) => {
             })
         }
 
-        const user = await User.findOne({email: result.value.email, status: {$gt: 0}})
+        const user = await User.findOne({email: result.value.email.toLowerCase(), status: {$gt: 0}})
 
         if(!user){
             return res.status(401).json({

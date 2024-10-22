@@ -3,6 +3,7 @@ const Joi = require('joi')
 const auth = require('../middlewares/auth')
 const Author = require('../models/Author')
 const debug = require('../utils/debug')
+const Case = require('case')
 
 const router = express.Router()
 
@@ -88,6 +89,15 @@ router.post('/', auth, async (req, res) => {
                 code: 400,
                 message: 'Invalid input(s)',
                 data: message
+            })
+        }
+
+        const existing = await Author.findOne({name: { $regex : new RegExp(result.value.name.replace(/\s+/g,' ').trim(), "i") }})
+        if(existing){
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: 'Author name is already exists!'
             })
         }
 
