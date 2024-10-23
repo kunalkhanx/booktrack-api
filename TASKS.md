@@ -1,6 +1,5 @@
 # Pending
 - Verify and validation rules on models
-- Add shelf books fetching function
 - Create Note model
 - Add create note function
 - Add update note function
@@ -8,6 +7,7 @@
 - Add get note function
 
 # Completed
+- Add shelf books fetching function
 - Add unique checks for better UX
 - Add some defualt shelf while register user
 - Add remove books from shelf function

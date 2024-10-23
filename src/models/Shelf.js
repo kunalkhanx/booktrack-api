@@ -26,5 +26,12 @@ const schema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
+schema.methods.getBooks = async function(query = {}, limit = 500, skip = 0){
+    const shelf = this
+    const Book = require('./Book')
+    const books = await Book.find({...query, status: 1, _id: shelf.books}).skip(skip).limit(limit)
+    return books
+}
+
 const Shelf = mongoose.model('Shelf', schema)
 module.exports = Shelf

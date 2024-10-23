@@ -37,6 +37,42 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+router.get('/:shelf/books', auth, async (req, res) => {
+    try{
+
+        const shelf = await Shelf.findById(req.params.shelf)
+        if(!shelf){
+            return res.status(404).json({
+                code: 404,
+                message: 'Shelf not found'
+            })
+        }
+
+        const query = {}
+        if(req.query.search){
+            query.title = {$regex: new RegExp(req.query.search, 'i')}
+        }
+
+        const limit = req.query.limit ? req.query.limit : 500;
+        const skip = req.query.skip ? req.query.skip : 0;
+
+        const books = await shelf.getBooks(query, limit, skip)
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!',
+            data: books
+        })
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 router.get('/:shelf', auth, async (req, res) => {
     try{
 
