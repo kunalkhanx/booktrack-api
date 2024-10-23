@@ -1,12 +1,13 @@
 # Pending
 - Verify and validation rules on models
-- Add update note function
+- Add delete note function
 - Add NoteComment model
 - Add add comment function
 - Add edit comment function
 - Add delete comment function
 
 # Completed
+- Add update note function
 - Add get note function
 - Add list notes function
 - Add create note function

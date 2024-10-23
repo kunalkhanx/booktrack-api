@@ -60,7 +60,7 @@ router.get('/', auth, async (req, res) => {
 router.get('/:note', auth, async (req, res) => {
     try{
 
-        const note = await Note.findById(req.params.note)
+        const note = await Note.findOne({_id: req.params.note, $or: [{user: req.user._id}, {is_public: true}]})
         if(!note){
             return res.status(404).json({
                 code: 404,
@@ -120,6 +120,54 @@ router.post('/:book', auth, async (req, res) => {
             data: note
         })
         
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
+router.patch('/:note', auth, async (req, res) => {
+    try{
+
+        const schema = Joi.object({
+            title: Joi.string().optional().max(160),
+            body: Joi.string().optional().max(5000),
+            is_public: Joi.boolean().optional()
+        })
+
+        const result = schema.validate(req.body)
+        if(result.error){
+            const message = result.error.details[0].message
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: message
+            })
+        }
+
+        const note = await Note.findOne({_id: req.params.note, user: req.user._id})
+        if(!note){
+            return res.status(404).json({
+                code: 404,
+                message: 'Note not found'
+            })
+        }
+
+        for(let i in result.value){
+            note[i] = result.value[i]
+        }
+
+        await note.save()
+
+        return res.status(201).json({
+            code: 201,
+            message: 'Request Complete!',
+            data: note
+        })
 
     }catch(e){
         debug.error(e)
