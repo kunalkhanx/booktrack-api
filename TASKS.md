@@ -1,7 +1,6 @@
 # Pending
 - Verify and validation rules on models
 - Add update note function
-- Add list notes function
 - Add get note function
 - Add NoteComment model
 - Add add comment function
@@ -9,6 +8,7 @@
 - Add delete comment function
 
 # Completed
+- Add list notes function
 - Add create note function
 - Create Note model
 - Add shelf books fetching function
