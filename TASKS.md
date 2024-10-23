@@ -1,12 +1,16 @@
 # Pending
 - Verify and validation rules on models
-- Create Note model
 - Add create note function
 - Add update note function
 - Add list notes function
 - Add get note function
+- Add NoteComment model
+- Add add comment function
+- Add edit comment function
+- Add delete comment function
 
 # Completed
+- Create Note model
 - Add shelf books fetching function
 - Add unique checks for better UX
 - Add some defualt shelf while register user
