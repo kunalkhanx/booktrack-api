@@ -52,6 +52,49 @@ router.post('/:note/comment', auth, async (req, res) => {
     }
 })
 
+router.patch('/comment/:comment', auth, async (req, res) => {
+    try{
+
+        const schema = Joi.object({
+            body: Joi.string().required().max(1000)
+        })
+
+        const result = schema.validate(req.body)
+        if(result.error){
+            const message = result.error.details[0].message
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: message
+            })
+        }
+
+        const comment = await NoteComment.findOne({user: req.user._id, _id: req.params.comment})
+        if(!comment){
+            return res.status(404).json({
+                code: 404,
+                message: 'Comment not found'
+            })
+        }
+        comment.body = result.value.body
+        await comment.save()
+
+        return res.status(201).json({
+            code: 201,
+            message: 'Request Complete!',
+            data: comment
+        }) 
+
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
 router.get('/', auth, async (req, res) => {
     try{
 
