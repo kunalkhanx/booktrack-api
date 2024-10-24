@@ -1,11 +1,56 @@
 const express = require('express')
+const Joi = require('joi')
 const auth = require('../middlewares/auth')
 const Book = require('../models/Book')
-const Joi = require('joi')
 const Note = require('../models/Note')
+const NoteComment = require('../models/NoteComment')
 
 const router = express.Router()
 
+
+router.post('/:note/comment', auth, async (req, res) => {
+    try{
+
+        const schema = Joi.object({
+            body: Joi.string().required().max(1000)
+        })
+
+        const result = schema.validate(req.body)
+        if(result.error){
+            const message = result.error.details[0].message
+            return res.status(400).json({
+                code: 400,
+                message: 'Invalid input(s)',
+                data: message
+            })
+        }
+
+        const note = await Note.findOne({_id: req.params.note, $or: [{user: req.user._id}, {is_public: true}]})
+        if(!note){
+            return res.status(404).json({
+                code: 404,
+                message: 'Note not found'
+            })
+        }
+
+        const comment = new NoteComment({...result.value, user: req.user._id, note: note._id})
+        await comment.save()
+
+        return res.status(201).json({
+            code: 201,
+            message: 'Request Complete!',
+            data: comment
+        }) 
+
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
 
 router.get('/', auth, async (req, res) => {
     try{
