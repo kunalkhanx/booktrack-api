@@ -184,10 +184,12 @@ router.get('/:note', auth, async (req, res) => {
             })
         }
 
+        const comments = await NoteComment.find({note: note._id})
+
         return res.status(200).json({
             code: 200,
             message: 'Request Complete!',
-            data: note
+            data: {note, comments}
         })
 
 

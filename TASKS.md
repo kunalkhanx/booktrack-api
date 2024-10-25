@@ -1,11 +1,11 @@
 # Pending
 - Verify and validation rules on models
-- Add comment fetching on note function
 - Perform a multi-user testing
 - Convert relational id inserts to object inserts
 - Add orderby on list functions
 
 # Completed
+- Add comment fetching on note function
 - Add delete comment function
 - Add edit comment function
 - Add add comment function
