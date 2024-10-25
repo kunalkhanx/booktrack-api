@@ -4,11 +4,12 @@ const auth = require('../middlewares/auth')
 const Book = require('../models/Book')
 const Note = require('../models/Note')
 const NoteComment = require('../models/NoteComment')
+const debug = require('../utils/debug');
 
 const router = express.Router()
 
 
-router.post('/:note/comment', auth, async (req, res) => {
+router.post('/comment/:note', auth, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -83,6 +84,33 @@ router.patch('/comment/:comment', auth, async (req, res) => {
             code: 201,
             message: 'Request Complete!',
             data: comment
+        }) 
+
+
+    }catch(e){
+        debug.error(e)
+        return res.status(500).json({
+            code: 500,
+            message: e._message ? e._message : 'Required failed!'
+        })
+    }
+})
+
+router.delete('/comment/:comment', auth, async (req, res) => {
+    try{
+
+        const comment = await NoteComment.findOne({user: req.user._id, _id: req.params.comment})
+        if(!comment){
+            return res.status(404).json({
+                code: 404,
+                message: 'Comment not found'
+            })
+        }
+        await NoteComment.deleteOne({_id: comment._id})
+
+        return res.status(200).json({
+            code: 200,
+            message: 'Request Complete!'
         }) 
 
 

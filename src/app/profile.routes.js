@@ -1,7 +1,7 @@
 const express = require('express')
 const auth = require('../middlewares/auth')
 const Joi = require('joi')
-
+const debug = require('../utils/debug')
 const router = express.Router()
 
 /**
