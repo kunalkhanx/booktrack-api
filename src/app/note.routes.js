@@ -34,7 +34,7 @@ router.post('/comment/:note', auth, async (req, res) => {
             })
         }
 
-        const comment = new NoteComment({...result.value, user: req.user._id, note: note._id})
+        const comment = new NoteComment({...result.value, user: req.user, note: note})
         await comment.save()
 
         return res.status(201).json({
@@ -242,7 +242,7 @@ router.post('/:book', auth, async (req, res) => {
             })
         }
 
-        const note = new Note({...result.value, book: book._id, user: req.user._id})
+        const note = new Note({...result.value, book: book, user: req.user})
         await note.save()
 
         return res.status(201).json({

@@ -149,14 +149,14 @@ router.post('/', auth, admin, async (req, res) => {
             genres.push(genreModel)
         }
 
-        const book = new Book({...result.value, authors: authors.map(item => item._id), genres: genres.map(item => item._id)})
+        const book = new Book({...result.value, authors, genres})
         await book.save()
 
 
         return res.status(201).json({
             code: 201,
             message: 'Request Complete!',
-            data: {...book.toJSON(), authors, genres}
+            data: book
         })
 
     }catch(e){
@@ -225,15 +225,6 @@ router.patch('/:book', auth, admin, async (req, res) => {
         }
 
         for(let i in result.value){
-            if(i === 'authors'){
-                console.log(result.value.authors)
-                book[i] = authors.map(item => item._id)
-                continue
-            }
-            if(i === 'genres'){
-                book[i] = genres.map(item => item._id)
-                continue
-            }
             book[i] = result.value[i]
         }
         await book.save()
@@ -244,7 +235,7 @@ router.patch('/:book', auth, admin, async (req, res) => {
         return res.status(201).json({
             code: 201,
             message: 'Request Complete!',
-            data: {...book.toJSON(), authors: bookAuthors, genres: bookGenres}
+            data: book
         })
 
     }catch(e){
