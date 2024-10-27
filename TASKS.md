@@ -2,9 +2,9 @@
 - Verify and validation rules on models
 - Perform a multi-user testing
 - Convert relational id inserts to object inserts
-- Implement admin/user roles
 
 # Completed
+- Implement admin/user roles
 - Add orderby on list functions
 - Add comment fetching on note function
 - Add delete comment function

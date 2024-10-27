@@ -4,6 +4,7 @@ const auth = require('../middlewares/auth')
 const Author = require('../models/Author')
 const debug = require('../utils/debug')
 const Case = require('case')
+const admin = require('../middlewares/admin')
 
 const router = express.Router()
 
@@ -75,7 +76,7 @@ router.get('/:author', auth, async (req, res) => {
     }
 })
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, admin, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -119,7 +120,7 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-router.patch('/:author', auth, async (req, res) => {
+router.patch('/:author', auth, admin, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -161,7 +162,7 @@ router.patch('/:author', auth, async (req, res) => {
     }
 })
 
-router.delete('/:author', auth, async (req, res) => {
+router.delete('/:author', auth, admin, async (req, res) => {
     try{
         const author = await Author.findById(req.params.author)
         if(!author){

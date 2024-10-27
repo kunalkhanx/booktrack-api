@@ -3,6 +3,7 @@ const Joi = require('joi')
 const auth = require('../middlewares/auth')
 const Genre = require('../models/Genre')
 const debug = require('../utils/debug')
+const admin = require('../middlewares/admin')
 
 const router = express.Router()
 
@@ -73,7 +74,7 @@ router.get('/:genre', auth, async (req, res) => {
     }
 })
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, admin, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -117,7 +118,7 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-router.patch('/:genre', auth, async (req, res) => {
+router.patch('/:genre', auth, admin, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -160,7 +161,7 @@ router.patch('/:genre', auth, async (req, res) => {
     }
 })
 
-router.delete('/:genre', auth, async (req, res) => {
+router.delete('/:genre', auth, admin, async (req, res) => {
     try{
         const genre = await Genre.findById(req.params.genre)
         if(!genre){

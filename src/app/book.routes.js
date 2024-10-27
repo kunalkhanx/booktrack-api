@@ -5,6 +5,7 @@ const auth = require('../middlewares/auth')
 const Author = require('../models/Author')
 const Genre = require('../models/Genre')
 const Book = require('../models/Book')
+const admin = require('../middlewares/admin')
 const router = express.Router()
 
 
@@ -95,7 +96,7 @@ router.get('/:book', auth, async (req, res) => {
     }
 })
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, admin, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -167,9 +168,7 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-
-
-router.patch('/:book', auth, async (req, res) => {
+router.patch('/:book', auth, admin, async (req, res) => {
     try{
 
         const schema = Joi.object({
@@ -257,7 +256,7 @@ router.patch('/:book', auth, async (req, res) => {
     }
 })
 
-router.delete('/:book', auth, async (req, res) => {
+router.delete('/:book', auth, admin, async (req, res) => {
     try{
         const book = await Book.findById(req.params.book)
         if(!book){

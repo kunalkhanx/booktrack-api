@@ -73,6 +73,11 @@ const schema = new mongoose.Schema({
         default: null,
         enum: ['male', 'female', 'others']
     },
+    role: {
+        type: String,
+        enum: ['USER', 'ADMIN'],
+        default: 'USER'
+    },
     status: {
         type: Number,
         default: 0
