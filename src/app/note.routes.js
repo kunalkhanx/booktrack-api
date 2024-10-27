@@ -145,6 +145,19 @@ router.get('/', auth, async (req, res) => {
         if(req.query.search){
             query.title = {$regex: new RegExp(req.query.search, 'i')}
         }
+
+        let sort = {createdAt: -1}
+        if(req.query.sort){
+            if(req.query.sort === 'recent'){
+                sort = {createdAt: -1}
+            }else if(req.query.sort === 'oldest'){
+                sort = {createdAt: 1}
+            }else if(req.query.sort === 'title'){
+                sort = {title: 1}
+            }else if(req.query.sort === 'title:desc'){
+                sort = {title: -1}
+            }
+        }
         
         const limit = req.query.limit ? req.query.limit : 500;
         const skip = req.query.skip ? req.query.skip : 0;
@@ -156,7 +169,7 @@ router.get('/', auth, async (req, res) => {
             })
         }
 
-        const notes = await Note.find(query).skip(skip).limit(limit)
+        const notes = await Note.find(query).skip(skip).limit(limit).sort(sort)
 
         return res.status(200).json({
             code: 200,
